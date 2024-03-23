@@ -3,7 +3,7 @@ package one.milestone.banco.model;
 /*
  * Programação Orientada a Objetos
  * Milestone 1
- * Discente:
+ * Discente: Polyana Giselle Alves Batista 
  * 
  */
 public class Conta {
@@ -17,7 +17,10 @@ public class Conta {
      *  aos respectivos atributos de instância
      */
     public Conta(String numero, float saldo, String dataAbertura, boolean status) {
-        
+         this.numero =  numero;
+         this.saldo = saldo;
+         this.dataAbertura= dataAbertura;
+         this.status = status;
     }
 
     /*
@@ -26,7 +29,11 @@ public class Conta {
      * declare o statement na condição de verificação: throw new IllegalArgumentException("Operação inválida");
      */
     public void sacar(float quantia) {
-        
+       if (quantia <=saldo) {
+    	   saldo -= quantia;
+       } else {
+    	   throw new IllegalArgumentException ("Operação inválida");
+       }
     }
 
     /*
@@ -35,7 +42,12 @@ public class Conta {
      * declare o statement na condição de verificação: throw new IllegalArgumentException("Operação inválida");
      */
     public void depositar(float quantia) {
-        
+        if (quantia > 0) {
+        	 saldo += quantia;
+        } else {
+            throw new IllegalArgumentException("Operação inválida");
+        }
+         
     }
 
     /*
@@ -45,8 +57,14 @@ public class Conta {
      * ou a conta destino esteja desativada, declare o statement na condição de verificação: throw new IllegalArgumentException("Operação inválida");
      */
     public void transferir(Conta destino, float quantia) {
-        
+    	if (quantia <= saldo && destino.isStatus()) {
+            saldo -= quantia;
+            destino.depositar(quantia);
+        } else {
+            throw new IllegalArgumentException("Operação inválida");
+        }
     }
+  
 
     // Getters e Setters - Não alterar
     public String getNumero() {
